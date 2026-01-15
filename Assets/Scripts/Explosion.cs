@@ -9,8 +9,6 @@ public class Explosion : MonoBehaviour
 
     public void OnExplosion(ExplodebleCube cube)
     {
-        Debug.Log("123");
-
         Collider[] colliders = Physics.OverlapSphere(cube.transform.position, _explosionRadius);
 
         List<ExplodebleCube> _explodebleCubes = new List<ExplodebleCube>();
