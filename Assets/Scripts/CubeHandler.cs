@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(DivisionCube))]
@@ -32,11 +31,11 @@ public class CubeHandler : MonoBehaviour
         if (TryDivision(cubeHit.DivisionChange))
         {
             _division.SpawnCube(GetCurrentAmountCubeForSpawn(), cubeHit);
-            _explosion.OnExplosion(cubeHit);
             Destroy(cubeHit.gameObject);
         }
         else
         {
+            _explosion.OnExplosion(cubeHit);
             Destroy(cubeHit.gameObject);
         }
     }

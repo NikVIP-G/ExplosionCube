@@ -8,6 +8,9 @@ public class DivisionCube : MonoBehaviour
     [SerializeField] private ExplodebleCube _prefabeExplodebleCube;
     [SerializeField] private ColorChanger _colorChanger;
 
+    [SerializeField] private float _explosionForce = 100;
+    [SerializeField] private float _explosionRadius = 1;
+
     public void SpawnCube(int amount, ExplodebleCube cube)
     {
         Vector3 spawnScale = cube.transform.localScale / 2;
@@ -20,7 +23,13 @@ public class DivisionCube : MonoBehaviour
             newCube.Initialize(newDivisionChance);
             SetTransfromValue(cube, newCube, spawnScale);
             _colorChanger.ChangeColorToRandom(newCube.Material);
+            AddExplosionForceForSpawnedCube(newCube, cube.transform.position);
         }
+    }
+
+    private void AddExplosionForceForSpawnedCube(ExplodebleCube spawnedCube, Vector3 positionExplosion)
+    {
+        spawnedCube.RigidBody.AddExplosionForce(_explosionForce, positionExplosion, _explosionRadius);
     }
 
     private void SetTransfromValue(ExplodebleCube origin, ExplodebleCube target, Vector3 scale)

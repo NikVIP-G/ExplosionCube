@@ -20,10 +20,10 @@ public class Raycaster : MonoBehaviour
 
     private void OnLeftMouseClicked()
     {
-        CastRay();
+        RayCast();
     }
 
-    private void CastRay()
+    private void RayCast()
     {
         Vector3 currentMousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(currentMousePosition);
