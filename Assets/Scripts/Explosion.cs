@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour
     [SerializeField] private float _baseExplosionForce = 200;
     [SerializeField] private float _baseExplosionRadius = 5;
 
-    private ForceMode _forceMode => ForceMode.Impulse;
+    private ForceMode _forceMode => ForceMode.VelocityChange;
 
     public void Explode(List<ExplodebleCube> spawnedCubes, ExplodebleCube originCube)
     {
