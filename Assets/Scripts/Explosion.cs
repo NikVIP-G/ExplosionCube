@@ -3,19 +3,61 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    [SerializeField] private float _explosionForce = 20;
-    [SerializeField] private float _explosionRadius = 3;
+    [SerializeField] private float _baseExplosionForce = 200;
+    [SerializeField] private float _baseExplosionRadius = 5;
 
-    public void OnExplosion(ExplodebleCube cube)
+    private ForceMode _forceMode => ForceMode.Impulse;
+
+    public void Explode(List<ExplodebleCube> spawnedCubes, ExplodebleCube originCube)
     {
-        Collider[] colliders = Physics.OverlapSphere(cube.transform.position, _explosionRadius);
+        if (spawnedCubes != null)
+            AddExplosionForceForSpawnedCube(spawnedCubes, originCube);
+        else
+            ExplosionCubesInRadius(originCube);
 
-        List<ExplodebleCube> _explodebleCubes = new List<ExplodebleCube>();
+        DestroyCube(originCube);
+    }
+
+    private void AddExplosionForceForSpawnedCube(List<ExplodebleCube> spawnedCubes, ExplodebleCube originCube)
+    {
+        foreach (ExplodebleCube cube in spawnedCubes)  
+            Push(cube, originCube.transform.position);
+    }
+
+    private void Push(ExplodebleCube cube, Vector3 pointEpicenter)
+    {
+        Vector3 direction = cube.transform.position - pointEpicenter;
+        direction.Normalize();
+        cube.RigidBody.AddForce(direction, _forceMode);
+    }
+
+    private void DestroyCube(ExplodebleCube originCube)
+    {
+        originCube.gameObject.SetActive(false);
+        Destroy(originCube.gameObject);
+    }
+
+    public void ExplosionCubesInRadius(ExplodebleCube cube)
+    {
+        Vector3 explosionEpicenter = cube.transform.position;
+        float scaleOriginCube = cube.transform.localScale.x;
+
+        float explotionForce = _baseExplosionForce / scaleOriginCube;
+        float explotionRadius = _baseExplosionRadius / scaleOriginCube;
+
+        Collider[] colliders = Physics.OverlapSphere(explosionEpicenter, explotionRadius);
 
         foreach (Collider collider in colliders)
         {
-            if (collider.TryGetComponent<ExplodebleCube>(out ExplodebleCube explodebleCube))
-                collider.attachedRigidbody.AddExplosionForce(_explosionForce, cube.transform.position, _explosionRadius);
+            if (collider.TryGetComponent<ExplodebleCube>(out ExplodebleCube explodebleCube) & explodebleCube != cube)
+            {
+                int maxForceMultiplier = 1;
+
+                float distance = Vector3.Distance(explodebleCube.transform.position, explosionEpicenter);
+                float forceMultiplier = maxForceMultiplier - (distance / explotionRadius);
+
+                explodebleCube.RigidBody.AddExplosionForce(explotionForce * forceMultiplier, explosionEpicenter, explotionRadius);
+            }
         }
     }
 }

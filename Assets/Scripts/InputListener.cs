@@ -15,8 +15,6 @@ public class InputListener : MonoBehaviour
     private void ListenMouseLeftClick()
     {
         if (Input.GetMouseButtonDown(_valueButtonForClick))
-        {
             LeftMouseClicked?.Invoke();
-        }
     }
 }

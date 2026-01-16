@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(DivisionCube))]
 [RequireComponent (typeof(ColorChanger))]
 [RequireComponent (typeof(Explosion))]
 
-public class CubeHandler : MonoBehaviour
+public class ExplodebleCubeHandler : MonoBehaviour
 {
     [SerializeField] private Raycaster _rayCaster;
     [SerializeField] private DivisionCube _division;
@@ -28,16 +29,14 @@ public class CubeHandler : MonoBehaviour
 
     private void OnCubeHit(ExplodebleCube cubeHit)
     {
+        List<ExplodebleCube> spawnedCubes = new();
+
         if (TryDivision(cubeHit.DivisionChange))
-        {
-            _division.SpawnCube(GetCurrentAmountCubeForSpawn(), cubeHit);
-            Destroy(cubeHit.gameObject);
-        }
+            spawnedCubes = _division.SpawnCube(GetCurrentAmountCubeForSpawn(), cubeHit);
         else
-        {
-            _explosion.OnExplosion(cubeHit);
-            Destroy(cubeHit.gameObject);
-        }
+            spawnedCubes = null;
+
+        _explosion.Explode(spawnedCubes, cubeHit);
     }
 
     private bool TryDivision(float divisionChance)
