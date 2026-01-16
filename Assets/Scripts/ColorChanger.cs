@@ -9,6 +9,6 @@ public class ColorChanger : MonoBehaviour
 
     private Color PickRandomColor()
     {
-        return new Color(Random.value, Random.value, Random.value, 1.0f);
+        return Random.ColorHSV();
     }
 }

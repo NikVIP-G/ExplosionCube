@@ -8,33 +8,10 @@ public class Explosion : MonoBehaviour
 
     private ForceMode _forceMode => ForceMode.VelocityChange;
 
-    public void Explode(List<ExplodebleCube> spawnedCubes, ExplodebleCube originCube)
-    {
-        if (spawnedCubes != null)
-            AddExplosionForceForSpawnedCube(spawnedCubes, originCube);
-        else
-            ExplosionCubesInRadius(originCube);
-
-        DestroyCube(originCube);
-    }
-
-    private void AddExplosionForceForSpawnedCube(List<ExplodebleCube> spawnedCubes, ExplodebleCube originCube)
+    public void AddExplosionForceForSpawnedCube(List<ExplodebleCube> spawnedCubes, ExplodebleCube originCube)
     {
         foreach (ExplodebleCube cube in spawnedCubes)  
             Push(cube, originCube.transform.position);
-    }
-
-    private void Push(ExplodebleCube cube, Vector3 pointEpicenter)
-    {
-        Vector3 direction = cube.transform.position - pointEpicenter;
-        direction.Normalize();
-        cube.RigidBody.AddForce(direction, _forceMode);
-    }
-
-    private void DestroyCube(ExplodebleCube originCube)
-    {
-        originCube.gameObject.SetActive(false);
-        Destroy(originCube.gameObject);
     }
 
     public void ExplosionCubesInRadius(ExplodebleCube cube)
@@ -59,5 +36,12 @@ public class Explosion : MonoBehaviour
                 explodebleCube.RigidBody.AddExplosionForce(explotionForce * forceMultiplier, explosionEpicenter, explotionRadius);
             }
         }
+    }
+
+    private void Push(ExplodebleCube cube, Vector3 pointEpicenter)
+    {
+        Vector3 direction = cube.transform.position - pointEpicenter;
+        direction.Normalize();
+        cube.RigidBody.AddForce(direction, _forceMode);
     }
 }

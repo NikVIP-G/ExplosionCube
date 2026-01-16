@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(DivisionCube))]
+[RequireComponent(typeof(SpawnerCube))]
 [RequireComponent (typeof(ColorChanger))]
 [RequireComponent (typeof(Explosion))]
 
 public class ExplodebleCubeHandler : MonoBehaviour
 {
     [SerializeField] private Raycaster _rayCaster;
-    [SerializeField] private DivisionCube _division;
+    [SerializeField] private SpawnerCube _spawner;
     [SerializeField] private Explosion _explosion;
 
     [SerializeField] private int _minDivisionAmout = 2;
@@ -29,14 +29,17 @@ public class ExplodebleCubeHandler : MonoBehaviour
 
     private void OnCubeHit(ExplodebleCube cubeHit)
     {
-        List<ExplodebleCube> spawnedCubes = new();
-
         if (TryDivision(cubeHit.DivisionChange))
-            spawnedCubes = _division.SpawnCube(GetCurrentAmountCubeForSpawn(), cubeHit);
+        {
+            List<ExplodebleCube> spawnedCubes = _spawner.SpawnCube(GetCurrentAmountCubeForSpawn(), cubeHit);
+            _explosion.AddExplosionForceForSpawnedCube(spawnedCubes, cubeHit);
+        }
         else
-            spawnedCubes = null;
+        {
+            _explosion.ExplosionCubesInRadius(cubeHit);
+        }
 
-        _explosion.Explode(spawnedCubes, cubeHit);
+        DestroyCube(cubeHit);
     }
 
     private bool TryDivision(float divisionChance)
@@ -47,5 +50,11 @@ public class ExplodebleCubeHandler : MonoBehaviour
     private int GetCurrentAmountCubeForSpawn()
     {
         return Random.Range(_minDivisionAmout, _maxDivisionAmout + 1);
+    }
+
+    private void DestroyCube(ExplodebleCube cube)
+    {
+        cube.gameObject.SetActive(false);
+        Destroy(cube.gameObject);
     }
 }

@@ -5,16 +5,16 @@ public class InputListener : MonoBehaviour
 {
     private int _valueButtonForClick = 0;
 
-    public event Action LeftMouseClicked;
+    public event Action OnClicked;
 
     private void Update()
     {
-        ListenMouseLeftClick();
+        ListenOnClick();
     }
 
-    private void ListenMouseLeftClick()
+    private void ListenOnClick()
     {
         if (Input.GetMouseButtonDown(_valueButtonForClick))
-            LeftMouseClicked?.Invoke();
+            OnClicked?.Invoke();
     }
 }

@@ -10,12 +10,12 @@ public class Raycaster : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputListener.LeftMouseClicked += OnLeftMouseClicked;
+        _inputListener.OnClicked += OnLeftMouseClicked;
     }
 
     private void OnDisable()
     {
-        _inputListener.LeftMouseClicked -= OnLeftMouseClicked;
+        _inputListener.OnClicked -= OnLeftMouseClicked;
     }
 
     private void OnLeftMouseClicked()

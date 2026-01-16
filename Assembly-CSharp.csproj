@@ -62,8 +62,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\InputListener.cs" />
+    <Compile Include="Assets\Scripts\SpawnerCube.cs" />
     <Compile Include="Assets\Scripts\ExplodebleCube.cs" />
-    <Compile Include="Assets\Scripts\DivisionCube.cs" />
     <Compile Include="Assets\Scripts\ColorChanger.cs" />
     <Compile Include="Assets\Scripts\ExplodebleCubeHandler.cs" />
     <Compile Include="Assets\Scripts\Raycaster.cs" />
