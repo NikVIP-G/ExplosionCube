@@ -501,10 +501,10 @@ GameObject:
   - component: {fileID: 865289031}
   - component: {fileID: 865289030}
   - component: {fileID: 865289029}
-  - component: {fileID: 865289035}
   - component: {fileID: 865289034}
   - component: {fileID: 865289033}
   - component: {fileID: 865289036}
+  - component: {fileID: 865289037}
   m_Layer: 0
   m_Name: CubeHandler
   m_TagString: Untagged
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rayCaster: {fileID: 963194229}
-  _division: {fileID: 865289035}
+  _spawner: {fileID: 865289037}
   _explosion: {fileID: 865289036}
   _minDivisionAmout: 2
   _maxDivisionAmout: 6
@@ -627,20 +627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ca2f38ceb92da418f8194dc4d7048c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &865289035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865289028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab9a35d15df6594db642b8bb51edd36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefabeExplodebleCube: {fileID: 5134286886980233806, guid: 665c552d0398a6c438e0fe70e4305522, type: 3}
-  _colorChanger: {fileID: 865289034}
 --- !u!114 &865289036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,6 +641,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseExplosionForce: 300
   _baseExplosionRadius: 5
+--- !u!114 &865289037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865289028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe359532ee6115846947b9bfb2e01f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefabeExplodebleCube: {fileID: 5134286886980233806, guid: 665c552d0398a6c438e0fe70e4305522, type: 3}
+  _colorChanger: {fileID: 865289034}
 --- !u!1001 &905348913
 PrefabInstance:
   m_ObjectHideFlags: 0
